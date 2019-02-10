@@ -23,7 +23,7 @@ The ResNet can be found in `resnet.py` ([check here](https://github.com/meng1994
 
 Figure 1 shows the pre-activation residual module. And Table 1 demonstrates the ResNet56 architecture for CIFAR-10. For details about the architecture of ResNet56, check [here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/resnet_cifar10_architecture.png).
 
-<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/preactivation_residual_module.png" width="500">
+<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/preactivation_residual_module.png" width="150">
 
 Figure 1: Pre-activation residual module ([reference](https://arxiv.org/abs/1603.05027)).
 
@@ -95,11 +95,11 @@ For experiment 4, I still use the method of learning rate decay, but increase th
 
 Figure 8 demonstrates the loss and accuracy curve of training and validation sets for experiment 4. And Figure 9 shows the evaluation of the network, which indicate a 93.39% accuracy, for experiment 4.
 
-<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/resnet56_cifar10_4.png" width="500">
+<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/resnet56_cifar10_5.png" width="500">
 
 Figure 8: Plot of training and validation loss and accuracy for experiment 4.
 
-<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/resnet_cifar10_experiment_4.png" width="400">
+<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/resnet_cifar10_experiment_5.png" width="400">
 
 Figure 9: Evaluation of the network, indicating 93.79% accuracy, for experiment 4.
 
