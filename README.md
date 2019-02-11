@@ -23,7 +23,7 @@ The ResNet can be found in `resnet.py` ([check here](https://github.com/meng1994
 
 Figure 1 shows the pre-activation residual module. And Table 1 demonstrates the ResNet56 architecture for CIFAR-10. For details about the architecture of ResNet56, check [here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/resnet_cifar10_architecture.png).
 
-<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/preactivation_residual_module.png" width="150">
+<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/preactivation_residual_module.png" width="100">
 
 Figure 1: Pre-activation residual module ([reference](https://arxiv.org/abs/1603.05027)).
 
