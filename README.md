@@ -2,12 +2,12 @@
 ## Objectives
 Implement ResNet from scratch, including ResNet56, and train them on CIFAR-10, Tiny ImageNet, and ImageNet datasets.
 * Construct ResNet56 and train the network on CIFAR-10 datasets to obtain ≥90% accuracy, which replicates the result of original ResNet on CIFAR-10.
-* Use ResNet56 and train the network on Tiny ImageNet Visual Recognition Challenge and claim a top ranking position on Leaderboard.
+* Use ResNet and train the network on Tiny ImageNet Visual Recognition Challenge and claim a top ranking position on Leaderboard.
 
 ## Packages Used
 * Python 3.6
 * [OpenCV](https://docs.opencv.org/3.4.4/) 4.0.0
-* [keras](https://keras.io/) 2.2.4
+* [keras](https://keras.io/) 2.2.4 for ResNet on CIFAR-10 and 2.1.0 for the rest
 * [Tensorflow](https://www.tensorflow.org/install/) 1.13.0
 * [cuda toolkit](https://developer.nvidia.com/cuda-toolkit) 10.0
 * [cuDNN](https://developer.nvidia.com/cudnn) 7.4.2
@@ -19,11 +19,11 @@ Implement ResNet from scratch, including ResNet56, and train them on CIFAR-10, T
 ### ResNet56 on CIFAR-10
 The details about CIFAR-10 datasets can be found [here](https://www.cs.toronto.edu/~kriz/cifar.html).
 
-The ResNet can be found in `resnet.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/nn/conv/resnet.py)) under `pipeline/nn/conv/` directory. The input to the model includes dimensions of the image (height, width, depth, and number of classes), number of stages, number of filters, regularization coefficient, batch normalization coefficient, batch normalization momentum. The ResNet in this project contains a pre-activation residual module with bottleneck.
+The ResNet can be found in `resnet.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/nn/conv/resnet.py)) under `pipeline/nn/conv/` directory. The input to the model includes dimensions of the image (height, width, depth, and number of classes), number of stages, number of filters, regularization coefficient, batch normalization coefficient, batch normalization momentum, and dataset name argument (default to `cifar10`). The ResNet in this project contains a pre-activation residual module with bottleneck.
 
-Figure 1 shows the pre-activation residual module. And Table 1 demonstrates the ResNet56 architecture for CIFAR-10. For details about the architecture of ResNet56, check [here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/resnet_cifar10_architecture.png).
+Figure 1 shows the pre-activation residual module. And Table 1 demonstrates the ResNet56 architecture for CIFAR-10. Unlike the original ResNet, which uses 7x7 filters with stride of 2 for the first convolution layer, ResNet for CIFAR-10 uses 5x5 filters with stride of 1 due to small dimensions for CIFAR-10 (32x32x3). For details about the architecture of ResNet56 for CIFAR-10, check [here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/resnet_cifar10_architecture.png).
 
-<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/preactivation_residual_module.png" width="100">
+<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/preactivation_residual_module.png" width="125">
 
 Figure 1: Pre-activation residual module ([reference](https://arxiv.org/abs/1603.05027)).
 
@@ -31,7 +31,7 @@ Table 1: ResNet56 for CIFAR-10
 
 | layer name    | output size   | 56-layer                                       |
 | ------------- |:-------------:| -----------------------------------------------|
-| conv1         | 32 x 32 x 64  | 7 x 7, 64, stride 1                            |
+| conv1         | 32 x 32 x 64  | 5 x 5, 64, stride 1                            |
 | conv2_x       | 32 x 32 x 64  | [1 x 1, 16]<br>[3 x 3, 16] x 9<br>[1 x 1, 64]  |
 | conv3_x       | 16 x 16 x 128 | [1 x 1, 32]<br>[3 x 3, 32] x 9<br>[1 x 1, 128] |
 | conv4_x       | 8 x 8 x 256   | [1 x 1, 64]<br>[3 x 3, 64] x 9<br>[1 x 1, 256] |
@@ -48,6 +48,57 @@ Here is the details about two callback classes:
 The `trainingmonitor.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/callbacks/trainingmonitor.py)) under `pipeline/callbacks/` directory create a `TrainingMonitor` callback that will be called at the end of every epoch when training a network. The monitor will construct a plot of training loss and accuracy. Applying such callback during training will enable us to babysit the training process and spot overfitting early, allowing us to abort the experiment and continue trying to tune parameters.
 
 The `EpochCheckpoint.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/callbacks/epochcheckpoint.py)) can help to store individual checkpoints for ResNet so that we do not have to retrain the network from beginning. The model is stored every 5 epochs.
+
+### ResNet for Tiny ImageNet
+The details about the challenge and dataset can be found [here](https://tiny-imagenet.herokuapp.com/).
+
+The `tiny_imagenet_config.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/io/hdf5datasetwriter.py)) under `config/` directory stores all relevant configurations for the project, including the paths to input images, total number of class labels, information on the training, validation, and testing splits, path to the HDF5 datasets, and path to output models, plots, and etc.
+
+#### Build the `HDF5` dataset
+For details about how to build `HDF5` file, check the `build_tiny_imagenet.py` in this [repo](https://github.com/meng1994412/GoogLeNet_from_scratch).
+
+#### Build image pre-processors
+The `meanpreprocessor.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/preprocessing/meanpreprocessor.py)) under `pipeline/preprocessing/` directory subtracts the mean red, green, and blue pixel intensties across the training set, which is a form of data normalization. Mean subtraction is used to reduce the affects of lighting variations during classification.
+
+The `simplepreprocessor.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/preprocessing/simplepreprocessor.py)) under `pipeline/preprocessing/` directory defines a class to change the size of image. This class is just used to ensure that each input image has dimenison of 64x64x3.
+
+The `imagetoarraypreprocessor.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/preprocessing/imagetoarraypreprocessor.py)) under `pipeline/preprocessing/` directory defines a class to convert the image dataset into keras-compatile arrays.
+
+#### Build ResNet from scratch
+Table 2 demonstrates architecture of ResNet for Tiny ImageNet. ResNet for Tiny ImageNet still uses 5x5 filters with stride of 1 for the first convolution layer due to small dimensions for Tiny ImageNet (64x64x3). For details about the architecture of ResNet for Tiny ImageNet, check [here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/resnet_tinyimagenet_architecture.png).
+
+Table 2: ResNet for Tiny ImageNet.
+
+| layer name    | output size   | 41-layer                                       |
+| ------------- |:-------------:| -----------------------------------------------|
+| conv1         | 64 x 64 x 64  | 5 x 5, 64, stride 1                            |
+| zero padding  | 66 x 66 x 64  | 1 x 1, stride 1                                |
+| max pool      | 32 x 32 x 64  | 3 x 3, stride 2                                |
+| conv2_x       | 32 x 32 x 128 | [1 x 1, 16]<br>[3 x 3, 16] x 3<br>[1 x 1, 64]  |
+| conv3_x       | 16 x 16 x 256 | [1 x 1, 32]<br>[3 x 3, 32] x 4<br>[1 x 1, 128] |
+| conv4_x       | 8 x 8 x 512   | [1 x 1, 64]<br>[3 x 3, 64] x 6<br>[1 x 1, 256] |
+| avg pool      | 1 x 1 x 512   | 8 x 8, stride 1                                |
+| linear        | 512           |                                                |
+| softmax       | 200           |                                                |
+
+The ResNet for Tiny ImageNet can also be found in `resnet.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/nn/conv/resnet.py)). Remember to change the dataset name argument to `tiny_imagenet`.
+
+#### Train the ResNet and evaluate it
+I use a "ctrl+c" method to train the model as a baseline. By using this method, I can start training with an initial learning rate (and associated set of hyperparameters), monitor training, and quickly adjust the learning rate based on the results as they come in.
+
+The `train.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/train.py)) is responsible for training the baseline model. The `TrainingMonitor` callback is responsible for plotting the loss and accuracy curves of training and validation sets. And the `EpochCheckpoint` callback is responsible for saving the model every 5 epochs.
+
+After getting a sense of baseline model, I will switch to use method of learning rate decay to re-train the model. The `train_decay.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/train_decay.py)) change the method from "ctrl+c" to learning rate decay to re-train the model. The `TrainingMonitor` callback again is responsible for plotting the loss and accuracy curves of training and validation sets. The `LearningRateScheduler` callback is responsible for learning rate decay.
+
+The `rank_accuracy.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/rank_accuracy.py)) measures the `rank-1` and `rank-5` accuracy of the model by using the testing set.
+
+There are some helper classes for training process, including:
+
+The `EpochCheckpoint.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/callbacks/epochcheckpoint.py)) can help to store individual checkpoints for ResNet so that we do not have to retrain the network from beginning. The model is stored every 5 epochs.
+
+The `hdf5datasetgenerator.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/io/hdf5datasetgenerator.py)) under `pipeline/io/` directory yields batches of images and labels from `HDF5` dataset. This class can help to facilitate our ability to work with datasets that are too big to fit into memory.
+
+The `ranked.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/utils/ranked.py)) under `pipeline/utils/` directory contains a helper function to measure both the `rank-1` and `rank-5` accuracy when the model is evaluated by using testing set.
 
 ## Results
 ### ResNet56 on CIFAR-10
@@ -90,7 +141,7 @@ Figure 6: Plot of training and validation loss and accuracy for experiment 3.
 
 Figure 7: Evaluation of the network, indicating 93.39% accuracy, for experiment 3.
 
-### Experiment 4
+#### Experiment 4
 For experiment 4, I still use the method of learning rate decay, but increase the number of epochs to 150.
 
 Figure 8 demonstrates the loss and accuracy curve of training and validation sets for experiment 4. And Figure 9 shows the evaluation of the network, which indicate a 93.39% accuracy, for experiment 4.
@@ -104,3 +155,32 @@ Figure 8: Plot of training and validation loss and accuracy for experiment 4.
 Figure 9: Evaluation of the network, indicating 93.79% accuracy, for experiment 4.
 
 I obtain 93.79% accuracy, thus successfully replicating the work of He et al ([reference](http://rodrigob.github.io/are_we_there_yet/build/classification_datasets_results.html#43494641522d3130)) on CIFAR-10 datasets.
+
+### ResNet on Tiny ImageNet
+#### Experiment 1
+For experiment 1, I use "ctrl+c" method to get a baseline model.
+
+Figure 10 demonstrates the loss and accuracy curve of training and validation sets for experiment 1. And Figure 11 shows the evaluation of the network, indicating a 57.27% rank-1 accuracy. But clearly, the overfitting occurs, especially for epochs from 40 to 70, and it gets more severe as epoch increments.
+
+<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/resnet_tinyimagenet_1.png" width="500">
+
+Figure 10: Plot of training and validation loss and accuracy for experiment 1.
+
+<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/resnet_tiny_imagenet_1.png" width="400">
+
+Figure 11: Evaluation of the network, indicating 57.27% `rank-1` accuracy, for experiment 1.
+
+#### Experiment 2
+For experiment 2, I switch method from "ctrl+c" to learning rate decay.
+
+Figure 12 demonstrates the loss and accuracy curve of training and validation sets for experiment 2. And Figure 13 shows the evaluation of the network, indicating a 57.93% rank-1 accuracy.
+
+<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/resnet_tinyimagenet_2.png" width="500">
+
+Figure 12: Plot of training and validation loss and accuracy for experiment 2.
+
+<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/resnet_tiny_imagenet_2.png" width="400">
+
+Figure 13: Evaluation of the network, indicating 57.93% `rank-1` accuracy, for experiment 2.
+
+With such `rank-1` accuracy, I can claim #5 on the Leaderboard in [Tiny ImageNet Visual Recognition Challenge](https://tiny-imagenet.herokuapp.com/).
