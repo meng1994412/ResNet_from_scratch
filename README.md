@@ -166,7 +166,7 @@ Figure 10 demonstrates the loss and accuracy curve of training and validation se
 
 Figure 10: Plot of training and validation loss and accuracy for experiment 1.
 
-<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/resnet_tiny_imagenet_1.png" width="300">
+<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/resnet_tiny_imagenet_1.png" width="200">
 
 Figure 11: Evaluation of the network, indicating 57.27% `rank-1` accuracy, for experiment 1.
 
@@ -179,7 +179,7 @@ Figure 12 demonstrates the loss and accuracy curve of training and validation se
 
 Figure 12: Plot of training and validation loss and accuracy for experiment 2.
 
-<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/resnet_tiny_imagenet_2.png" width="300">
+<img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/resnet_tiny_imagenet_2.png" width="200">
 
 Figure 13: Evaluation of the network, indicating 57.93% `rank-1` accuracy, for experiment 2.
 
