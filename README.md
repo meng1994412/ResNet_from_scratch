@@ -49,13 +49,28 @@ The `trainingmonitor.py` ([check here](https://github.com/meng1994412/ResNet_fro
 
 The `EpochCheckpoint.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/callbacks/epochcheckpoint.py)) can help to store individual checkpoints for ResNet so that we do not have to retrain the network from beginning. The model is stored every 5 epochs.
 
+We could use following command to train the model if we start from the beginning.
+```
+python resenet_cifar10.py --checkpoints output/checkpoints
+```
+
+If we start the training at middle of the epochs:
+```
+python resenet_cifar10.py --checkpoints output/checkpoints --model output/checkpoints/epoch_{epoch_number_you_want_to_start}.hdf --start_epoch {the_epoch_number_you_want_to_start}
+```
+
+For learning rate decay, just use following command:
+```
+python resenet_cifar10_decay.py --model output/resnet_cifar10.hdf5 --output output
+```
+
 ### ResNet for Tiny ImageNet
 The details about the challenge and dataset can be found [here](https://tiny-imagenet.herokuapp.com/).
 
 The `tiny_imagenet_config.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/io/hdf5datasetwriter.py)) under `config/` directory stores all relevant configurations for the project, including the paths to input images, total number of class labels, information on the training, validation, and testing splits, path to the HDF5 datasets, and path to output models, plots, and etc.
 
 #### Build the `HDF5` dataset
-For details about how to build `HDF5` file, check the `build_tiny_imagenet.py` in this [repo](https://github.com/meng1994412/GoogLeNet_from_scratch).
+For details about how to build `HDF5` file for Tiny ImageNet dataset, check the `build_tiny_imagenet.py` in this [repo](https://github.com/meng1994412/GoogLeNet_from_scratch).
 
 #### Build image pre-processors
 The `meanpreprocessor.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/preprocessing/meanpreprocessor.py)) under `pipeline/preprocessing/` directory subtracts the mean red, green, and blue pixel intensties across the training set, which is a form of data normalization. Mean subtraction is used to reduce the affects of lighting variations during classification.
@@ -99,6 +114,26 @@ The `EpochCheckpoint.py` ([check here](https://github.com/meng1994412/ResNet_fro
 The `hdf5datasetgenerator.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/io/hdf5datasetgenerator.py)) under `pipeline/io/` directory yields batches of images and labels from `HDF5` dataset. This class can help to facilitate our ability to work with datasets that are too big to fit into memory.
 
 The `ranked.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/utils/ranked.py)) under `pipeline/utils/` directory contains a helper function to measure both the `rank-1` and `rank-5` accuracy when the model is evaluated by using testing set.
+
+We could use following command to train the model if we start from the beginning.
+```
+python train.py --checkpoints output/checkpoints
+```
+
+If we start the training at middle of the epochs:
+```
+python train.py --checkpoints output/checkpoints --model output/checkpoints/epoch_{epoch_number_you_want_to_start}.hdf --start_epoch {the_epoch_number_you_want_to_start}
+```
+
+For learning rate decay, just use following command:
+```
+python train_decay.py --model output/resnet_tinyimagenet_decay.hdf5
+```
+
+In order to use testing set to evaluate the network, use the following command:
+```
+python rank_accuracy.py
+```
 
 ## Results
 ### ResNet56 on CIFAR-10
@@ -144,7 +179,7 @@ Figure 7: Evaluation of the network, indicating 93.39% accuracy, for experiment 
 #### Experiment 4
 For experiment 4, I still use the method of learning rate decay, but increase the number of epochs to 150.
 
-Figure 8 demonstrates the loss and accuracy curve of training and validation sets for experiment 4. And Figure 9 shows the evaluation of the network, which indicate a 93.39% accuracy, for experiment 4.
+Figure 8 demonstrates the loss and accuracy curve of training and validation sets for experiment 4. And Figure 9 shows the evaluation of the network, which indicate a 93.79% accuracy, for experiment 4.
 
 <img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/resnet56_cifar10_5.png" width="500">
 
