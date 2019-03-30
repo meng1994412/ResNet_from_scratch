@@ -67,7 +67,7 @@ python resenet_cifar10_decay.py --model output/resnet_cifar10.hdf5 --output outp
 ### ResNet for Tiny ImageNet
 The details about the challenge and dataset can be found [here](https://tiny-imagenet.herokuapp.com/).
 
-The `tiny_imagenet_config.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/io/hdf5datasetwriter.py)) under `config/` directory stores all relevant configurations for the project, including the paths to input images, total number of class labels, information on the training, validation, and testing splits, path to the HDF5 datasets, and path to output models, plots, and etc.
+The `tiny_imagenet_config.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/config/tiny_imagenet_config.py)) under `config/` directory stores all relevant configurations for the project, including the paths to input images, total number of class labels, information on the training, validation, and testing splits, path to the HDF5 datasets, and path to output models, plots, and etc.
 
 #### Build the `HDF5` dataset
 For details about how to build `HDF5` file for Tiny ImageNet dataset, check the `build_tiny_imagenet.py` in this [repo](https://github.com/meng1994412/GoogLeNet_from_scratch).
