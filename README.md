@@ -54,7 +54,7 @@ We could use following command to train the model if we start from the beginning
 python resenet_cifar10.py --checkpoints output/checkpoints
 ```
 
-If we start the training at middle of the epochs:
+If we start the training at middle of the epochs (simply use a number to replace `{epoch_number_you_want_to_start}`):
 ```
 python resenet_cifar10.py --checkpoints output/checkpoints --model output/checkpoints/epoch_{epoch_number_you_want_to_start}.hdf --start_epoch {the_epoch_number_you_want_to_start}
 ```
@@ -80,21 +80,21 @@ The `simplepreprocessor.py` ([check here](https://github.com/meng1994412/ResNet_
 The `imagetoarraypreprocessor.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/preprocessing/imagetoarraypreprocessor.py)) under `pipeline/preprocessing/` directory defines a class to convert the image dataset into keras-compatile arrays.
 
 #### Build ResNet from scratch
-Table 2 demonstrates architecture of ResNet for Tiny ImageNet. ResNet for Tiny ImageNet still uses 5x5 filters with stride of 1 for the first convolution layer due to small dimensions for Tiny ImageNet (64x64x3). For details about the architecture of ResNet for Tiny ImageNet, check [here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/resnet_tinyimagenet_architecture.png).
+Table 2 demonstrates architecture of ResNet for Tiny ImageNet. ResNet for Tiny ImageNet uses 5x5 filters with stride of 1 for the first convolution layer due to small dimensions for Tiny ImageNet (64x64x3). For details about the architecture of ResNet for Tiny ImageNet, check [here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/resnet_tinyimagenet_architecture.png).
 
 Table 2: ResNet for Tiny ImageNet.
 
-| layer name    | output size   | 41-layer                                       |
-| ------------- |:-------------:| -----------------------------------------------|
-| conv1         | 64 x 64 x 64  | 5 x 5, 64, stride 1                            |
-| zero padding  | 66 x 66 x 64  | 1 x 1, stride 1                                |
-| max pool      | 32 x 32 x 64  | 3 x 3, stride 2                                |
-| conv2_x       | 32 x 32 x 128 | [1 x 1, 16]<br>[3 x 3, 16] x 3<br>[1 x 1, 64]  |
-| conv3_x       | 16 x 16 x 256 | [1 x 1, 32]<br>[3 x 3, 32] x 4<br>[1 x 1, 128] |
-| conv4_x       | 8 x 8 x 512   | [1 x 1, 64]<br>[3 x 3, 64] x 6<br>[1 x 1, 256] |
-| avg pool      | 1 x 1 x 512   | 8 x 8, stride 1                                |
-| linear        | 512           |                                                |
-| softmax       | 200           |                                                |
+| layer name    | output size   | 41-layer                                         |
+| ------------- |:-------------:| -------------------------------------------------|
+| conv1         | 64 x 64 x 64  | 5 x 5, 64, stride 1                              |
+| zero padding  | 66 x 66 x 64  | 1 x 1, stride 1                                  |
+| max pool      | 32 x 32 x 64  | 3 x 3, stride 2                                  |
+| conv2_x       | 32 x 32 x 128 | [1 x 1, 32]<br>[3 x 3, 32] x 3<br>[1 x 1, 128]   |
+| conv3_x       | 16 x 16 x 256 | [1 x 1, 64]<br>[3 x 3, 64] x 4<br>[1 x 1, 256]   |
+| conv4_x       | 8 x 8 x 512   | [1 x 1, 128]<br>[3 x 3, 128] x 6<br>[1 x 1, 512] |
+| avg pool      | 1 x 1 x 512   | 8 x 8, stride 1                                  |
+| linear        | 512           |                                                  |
+| softmax       | 200           |                                                  |
 
 The ResNet for Tiny ImageNet can also be found in `resnet.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/nn/conv/resnet.py)). Remember to change the dataset name argument to `tiny_imagenet`.
 
@@ -120,7 +120,7 @@ We could use following command to train the model if we start from the beginning
 python train.py --checkpoints output/checkpoints
 ```
 
-If we start the training at middle of the epochs:
+If we start the training at middle of the epochs (simply use a number to replace `{epoch_number_you_want_to_start}`):
 ```
 python train.py --checkpoints output/checkpoints --model output/checkpoints/epoch_{epoch_number_you_want_to_start}.hdf --start_epoch {the_epoch_number_you_want_to_start}
 ```
