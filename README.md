@@ -21,7 +21,7 @@ The details about CIFAR-10 datasets can be found [here](https://www.cs.toronto.e
 
 The ResNet can be found in `resnet.py` ([check here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/pipeline/nn/conv/resnet.py)) under `pipeline/nn/conv/` directory. The input to the model includes dimensions of the image (height, width, depth, and number of classes), number of stages, number of filters, regularization coefficient, batch normalization coefficient, batch normalization momentum, and dataset name argument (default to `cifar10`). The ResNet in this project contains a pre-activation residual module with bottleneck.
 
-Figure 1 shows an example of the pre-activation residual module. In this project, pre-activation + bottlenect residual module is used. And Table 1 demonstrates the ResNet56 architecture for CIFAR-10. Unlike the original ResNet, which uses 7x7 filters with stride of 2 for the first convolution layer, ResNet for CIFAR-10 uses 5x5 filters with stride of 1 due to small dimensions for CIFAR-10 (32x32x3). For details about the architecture of ResNet56 for CIFAR-10, check [here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/resnet_cifar10_architecture.png).
+Figure 1 shows an example of the pre-activation residual module. In this project, pre-activation + bottlenect residual module is used. And Table 1 demonstrates the ResNet56 architecture for CIFAR-10. Unlike the original ResNet, which uses 7x7 filters with stride of 2 for the first convolution layer, ResNet for CIFAR-10 uses 3x3 filters with stride of 1 due to small dimensions for CIFAR-10 (32x32x3). For details about the architecture of ResNet56 for CIFAR-10, check [here](https://github.com/meng1994412/ResNet_from_scratch/blob/master/resnet_cifar10_architecture.png).
 
 <img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/preactivation_residual_module.png" width="125">
 
@@ -31,7 +31,7 @@ Table 1: ResNet56 for CIFAR-10
 
 | layer name    | output size   | 56-layer                                       |
 | ------------- |:-------------:| -----------------------------------------------|
-| conv1         | 32 x 32 x 64  | 5 x 5, 64, stride 1                            |
+| conv1         | 32 x 32 x 64  | 3 x 3, 64, stride 1                            |
 | conv2_x       | 32 x 32 x 64  | [1 x 1, 16]<br>[3 x 3, 16] x 9<br>[1 x 1, 64]  |
 | conv3_x       | 16 x 16 x 128 | [1 x 1, 32]<br>[3 x 3, 32] x 9<br>[1 x 1, 128] |
 | conv4_x       | 8 x 8 x 256   | [1 x 1, 64]<br>[3 x 3, 64] x 9<br>[1 x 1, 256] |
