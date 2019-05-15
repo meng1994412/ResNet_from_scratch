@@ -140,6 +140,16 @@ python rank_accuracy.py
 #### Experiment 1
 In this experiment, I use original number of filters in ResNet for CIFAR-10, according to He et al ([reference](https://arxiv.org/abs/1512.03385)), which is (16, 32, 64) respectively for the residual module.
 
+I use "ctrl+c" method with learning rate schedule shown as Table 3. `SGD` optimizer with momentum of 0.9 is used.
+
+Table 3: Learning rate schedule for experiment 1.
+
+| Epoch | Learning Rate |
+|:-----:|:-------------:|
+|1 - 50 | 1e-3          |
+|51 - 75| 1e-4          |
+|76 - 85| 1e-5          |
+
 Figure 2 demonstrates the loss and accuracy curve of training and validation sets. And Figure 3 shows the evaluation of the network, which indicate a 88.18% accuracy. Such accuracy is quite similar to what MiniVGG obtains, according this [repo](https://github.com/meng1994412/VGGNet_from_scratch).
 
 <img src="https://github.com/meng1994412/ResNet_from_scratch/blob/master/output/resnet56_cifar10_1.png" width="500">
@@ -193,7 +203,15 @@ I obtain 93.79% accuracy, thus successfully replicating the work of He et al ([r
 
 ### ResNet on Tiny ImageNet
 #### Experiment 1
-For experiment 1, I use "ctrl+c" method to get a baseline model.
+For experiment 1, I use "ctrl+c" method with learning rate schedule shown as Table 4. `SGD` optimizer with momentum of 0.9 is used.
+
+Table 4: Learning rate schedule for experiment 1.
+
+| Epoch | Learning Rate |
+|:-----:|:-------------:|
+|1 - 30 | 1e-3          |
+|31 - 50| 1e-4          |
+|51 - 70| 1e-5          |
 
 Figure 10 demonstrates the loss and accuracy curve of training and validation sets for experiment 1. And Figure 11 shows the evaluation of the network, indicating a 57.27% rank-1 accuracy. But clearly, the overfitting occurs, especially for epochs from 40 to 70, and it gets more severe as epoch increments.
 
