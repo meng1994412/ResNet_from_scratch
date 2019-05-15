@@ -1,7 +1,7 @@
 # ResNet from scratch
 ## Objectives
-Implement ResNet from scratch, including ResNet56, and train them on CIFAR-10, Tiny ImageNet, and ImageNet datasets.
-* Construct ResNet56 and train the network on CIFAR-10 datasets to obtain ≥90% accuracy, which replicates the result of original ResNet on CIFAR-10.
+Implement ResNet from scratch and train them on CIFAR-10, Tiny ImageNet, and ImageNet datasets.
+* Construct ResNet56 and train the network on CIFAR-10 datasets to obtain 93.79% accuracy, which replicates the result of original ResNet on CIFAR-10.
 * Use ResNet and train the network on Tiny ImageNet Visual Recognition Challenge and claim a top ranking position on Leaderboard.
 
 ## Packages Used
