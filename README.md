@@ -146,9 +146,9 @@ Table 3: Learning rate schedule for experiment 1.
 
 | Epoch | Learning Rate |
 |:-----:|:-------------:|
-|1 - 50 | 1e-3          |
-|51 - 75| 1e-4          |
-|76 - 85| 1e-5          |
+|1 - 50 | 1e-1          |
+|51 - 75| 1e-2          |
+|76 - 85| 1e-3          |
 
 Figure 2 demonstrates the loss and accuracy curve of training and validation sets. And Figure 3 shows the evaluation of the network, which indicate a 88.18% accuracy. Such accuracy is quite similar to what MiniVGG obtains, according this [repo](https://github.com/meng1994412/VGGNet_from_scratch).
 
@@ -209,9 +209,9 @@ Table 4: Learning rate schedule for experiment 1.
 
 | Epoch | Learning Rate |
 |:-----:|:-------------:|
-|1 - 30 | 1e-3          |
-|31 - 50| 1e-4          |
-|51 - 70| 1e-5          |
+|1 - 30 | 1e-1          |
+|31 - 50| 1e-2          |
+|51 - 70| 1e-3          |
 
 Figure 10 demonstrates the loss and accuracy curve of training and validation sets for experiment 1. And Figure 11 shows the evaluation of the network, indicating a 57.27% rank-1 accuracy. But clearly, the overfitting occurs, especially for epochs from 40 to 70, and it gets more severe as epoch increments.
 
