@@ -52,8 +52,8 @@ valGen = HDF5DatasetGenerator(config.VAL_HDF5, 64,
 if args["model"] is None:
     print("[INFO] compiling model...")
     model = ResNet.build(64, 64, 3, config.NUM_CLASSES, (3, 4, 6),
-        (64, 128, 256, 512), reg = 0.0005, dataset = "tiny_imagenet")
-    opt = SGD(lr = 1e-1, momentum = 0.9)
+		(64, 128, 256, 512), reg = 0.0005, dataset = "tiny_imagenet")
+    opt = SGD(lr = 1e-1, momentum = 0.9, nesterov = True)
     model.compile(loss = "categorical_crossentropy", optimizer = opt, metrics = ["accuracy"])
 
 # otherwise, load the checkpoint from disk
@@ -77,7 +77,7 @@ model.fit_generator(
     steps_per_epoch = trainGen.numImages // 64,
     validation_data = valGen.generator(),
     validation_steps = valGen.numImages // 64,
-    epochs = 10,
+    epochs = 20,
     max_queue_size = 10,
     callbacks = callbacks,
     verbose = 1

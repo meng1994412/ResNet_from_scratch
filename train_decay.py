@@ -18,7 +18,7 @@ import json
 import os
 
 # define the total number epochs to train for along with the initial learning rate
-NUM_EPOCHS = 85
+NUM_EPOCHS = 75
 INIT_LR = 1e-1
 
 def poly_decay(epoch):
